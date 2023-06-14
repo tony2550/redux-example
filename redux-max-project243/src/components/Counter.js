@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import classes from './Counter.module.css';
+import { DECREMENT, INCREASE, INCREMENT, TOGGLE } from '../store';
 
 const Counter = () => {
   const dispatch = useDispatch();
@@ -12,19 +13,19 @@ const Counter = () => {
 
   const plusHandler = () => {
     // 여기서 type은 redux store의 reducer에서 사용하는 값 중 하나여야한다.
-    dispatch({ type: 'increment' });
+    dispatch({ type: INCREMENT });
   };
 
   const increaseHandler = () => {
-    dispatch({ type: 'increase', amount: 5 });
+    dispatch({ type: INCREASE, amount: 5 });
   };
 
   const minusHandler = () => {
-    dispatch({ type: 'decrement' });
+    dispatch({ type: DECREMENT });
   };
 
   const toggleCounterHandler = () => {
-    dispatch({ type: 'toggle' });
+    dispatch({ type: TOGGLE });
   };
 
   return (
