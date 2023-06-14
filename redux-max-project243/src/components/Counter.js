@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { counterActions } from '../store';
 import classes from './Counter.module.css';
 
 const Counter = () => {
@@ -12,19 +13,19 @@ const Counter = () => {
 
   const plusHandler = () => {
     // 여기서 type은 redux store의 reducer에서 사용하는 값 중 하나여야한다.
-    dispatch({ type: 'increment' });
+    dispatch(counterActions.increment);
   };
 
   const increaseHandler = () => {
-    dispatch({ type: 'increase', amount: 5 });
+    dispatch(counterActions.increase(10)); // { type : SOME_UNIQUE_IDENTIFIER, payload: 10 } payload는 디폴트 값이다.
   };
 
   const minusHandler = () => {
-    dispatch({ type: 'decrement' });
+    dispatch(counterActions.decrement());
   };
 
   const toggleCounterHandler = () => {
-    dispatch({ type: 'toggle' });
+    dispatch(counterActions.toggle());
   };
 
   return (

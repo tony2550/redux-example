@@ -1,10 +1,9 @@
-import { createStore } from 'redux';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, configureStore } from '@reduxjs/toolkit';
 
 const initialState = { counter: 0, show: true };
 
 // 전역상태의 slice를 미리 만들어 놓아야한다.
-createSlice({
+const counterSlice = createSlice({
   name: 'counter', // slice의 이름
   initialState: initialState, // 초기값
   reducers: {
@@ -17,7 +16,7 @@ createSlice({
     }, // if문이 필요없다.
     // 사용자 함수이기 때문에 유연하게 두개의 파라미터를 받을 수 있다.
     increase(state, action) {
-      state.counter = state.counter + action.amount;
+      state.counter = state.counter + action.payload;
     },
     toggleCounter(state) {
       state.show = !state.show;
@@ -25,41 +24,13 @@ createSlice({
   },
 });
 
-// action 상수 정의하기
-export const INCREMENT = 'increment';
-export const INCREASE = 'increase';
-export const DECREMENT = 'decrement';
-export const TOGGLE = 'toggle';
+// counterSlice.actions.toggleCounter(); // action creator
+//return an action object - {type: 'unique 식별자'}
 
-const counterReducer = (state = initialState, action) => {
-  if (action.type === 'increment') {
-    return {
-      counter: state.counter + 1,
-      show: state.show,
-    };
-  }
-  if (action.type === 'increase') {
-    return {
-      counter: state.counter + action.amount,
-      show: state.show,
-    };
-  }
-  if (action.type === 'decrement') {
-    return {
-      counter: state.counter - 1,
-      show: state.show,
-    };
-  }
-  if (action.type === 'toggle') {
-    return {
-      counter: state.counter,
-      show: !state.show,
-    };
-  }
+const store = configureStore({
+  reducer: counterSlice.reducer,
+}); // reducer가 아닌설정 객체를 전달해야한다
 
-  return state;
-};
-
-const store = createStore(counterReducer);
+export const counterActions = counterSlice.actions; // counter actions export
 
 export default store;
